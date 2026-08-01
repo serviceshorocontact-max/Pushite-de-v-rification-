@@ -8,8 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'custom-white': '#FFFFFF',
-        'custom-green': '#2E7D32',
+        'custom-green': '#2E7D32',    // Vert foncé
         'custom-light-green': '#4CAF50',
         'custom-yellow': '#FFC107',
         'custom-light-yellow': '#FFF9C4',
