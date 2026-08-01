@@ -1,18 +1,7 @@
-import Navbar from '@/app/components/Navbar';
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="fr">
-      <body className={inter.className}>
-        <Navbar />  {/* ← Ajoute cette ligne */}
-        {children}
-      </body>
-    </html>
-  );
-}
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Navbar from '@/app/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }
