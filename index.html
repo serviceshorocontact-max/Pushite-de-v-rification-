@@ -16,11 +16,103 @@
         .file-upload-area:hover {
             background-color: rgba(255, 249, 196, 0.3);
         }
+        .navbar-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FFC107;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transition: all 0.3s ease;
+            transform: scaleY(0);
+            transform-origin: top;
+            opacity: 0;
+        }
+        .mobile-menu.open {
+            transform: scaleY(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="min-h-screen flex items-center justify-center p-4 bg-custom-gradient">
+    <!-- ============ NAVBAR ============ -->
+    <nav class="bg-white/95 backdrop-blur-sm navbar-shadow sticky top-0 z-50 border-b border-[#FFC107]/20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / Titre -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🎫</span>
+                    <span class="text-xl font-bold text-[#2E7D32]">Ticket<span class="text-[#FFC107]">App</span></span>
+                </div>
+
+                <!-- Liens de navigation (Desktop) -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link active text-[#2E7D32] font-medium">Accueil</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium">Services</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium">Tarifs</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium">À propos</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium">Contact</a>
+                </div>
+
+                <!-- Bouton Connexion (Desktop) -->
+                <div class="hidden md:block">
+                    <button class="bg-[#2E7D32] text-white px-5 py-2 rounded-lg hover:bg-[#4CAF50] transition font-medium">
+                        Se connecter
+                    </button>
+                </div>
+
+                <!-- Bouton Menu Mobile -->
+                <button id="menuBtn" class="md:hidden text-[#2E7D32] focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" id="menuIcon"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Menu Mobile -->
+            <div id="mobileMenu" class="mobile-menu md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#" class="nav-link active text-[#2E7D32] font-medium py-2 border-b border-gray-100">Accueil</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium py-2 border-b border-gray-100">Services</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium py-2 border-b border-gray-100">Tarifs</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium py-2 border-b border-gray-100">À propos</a>
+                    <a href="#" class="nav-link text-gray-600 hover:text-[#2E7D32] font-medium py-2 border-b border-gray-100">Contact</a>
+                    <button class="bg-[#2E7D32] text-white px-5 py-2 rounded-lg hover:bg-[#4CAF50] transition font-medium w-full">
+                        Se connecter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ CONTENU PRINCIPAL ============ -->
+    <main class="min-h-screen flex items-center justify-center p-4 bg-custom-gradient">
         <div class="max-w-xl w-full mx-auto p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-[#FFC107]/30">
+            
+            <!-- Badge -->
+            <div class="flex justify-center mb-4">
+                <span class="bg-[#FFC107]/20 text-[#2E7D32] text-xs font-semibold px-3 py-1 rounded-full border border-[#FFC107]/30">
+                    🚀 Nouvelle demande
+                </span>
+            </div>
+
             <h2 class="text-3xl font-bold text-[#2E7D32] mb-2 text-center">🎫 Demande de ticket</h2>
             <p class="text-center text-gray-600 mb-6">Remplissez le formulaire et un code vous sera attribué</p>
             
@@ -65,6 +157,23 @@
                 🎨 Design : Blanc · Vert · Jaune | <span class="text-[#2E7D32]">✦</span> Ticket App
             </div>
         </div>
-    </div>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-white/95 border-t border-[#FFC107]/20 py-4">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-gray-500">
+            <p>© 2026 <span class="text-[#2E7D32] font-semibold">TicketApp</span>. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ============ JAVASCRIPT POUR MENU MOBILE ============ -->
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
