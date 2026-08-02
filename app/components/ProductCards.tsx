@@ -1,8 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion'; // Si framer-motion est installé, sinon supprime les imports et les balises <motion.xxx>
-
 interface ProductCardProps {
   title: string;
   price: string;
@@ -13,10 +10,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ title, price, description, popular = false, onSelect }: ProductCardProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+    <div
       className={`bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 border ${
         popular
           ? 'border-custom-yellow ring-2 ring-custom-yellow/20'
@@ -45,7 +39,7 @@ const ProductCard = ({ title, price, description, popular = false, onSelect }: P
       >
         Choisir cette offre
       </button>
-    </motion.div>
+    </div>
   );
 };
 
@@ -72,8 +66,10 @@ const ProductCards = () => {
   ];
 
   const handleSelect = (title: string) => {
-    alert(`Vous avez sélectionné : ${title}`);
-    // Tu peux remplacer par une redirection ou une modale
+    // Redirige vers le formulaire de demande
+    window.location.href = '/formulaire';
+    // Ou affiche une alerte :
+    // alert(`Vous avez sélectionné : ${title}`);
   };
 
   return (
