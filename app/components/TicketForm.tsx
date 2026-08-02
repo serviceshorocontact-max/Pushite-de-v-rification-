@@ -8,10 +8,14 @@ import Image from 'next/image';
 
 const schema = yup.object({
   nom: yup.string().required('Le nom est obligatoire'),
-  email: yup.string().email('Email invalide').required('L\'email est obligatoire'),
+  email: yup.string().email('Email invalide').required("L'email est obligatoire"),
   telephone: yup.string().required('Le téléphone est obligatoire'),
   message: yup.string(),
-  photo: yup.mixed().required('Veuillez importer une photo'),
+
+  photo: yup
+    .mixed<File>()
+    .nullable()
+    .required('Veuillez importer une photo'),
 }).required();
 
 type FormData = yup.InferType<typeof schema>;
