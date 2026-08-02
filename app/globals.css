@@ -20,6 +20,45 @@ body {
 
 @layer utilities {
   .bg-custom-gradient {
-    @apply bg-gradient-to-br from-custom-light-green/10 via-custom-white to-custom-light-yellow/30;
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.08), #FFFFFF, rgba(255, 193, 7, 0.15));
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+  }
+
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(46, 125, 50, 0.15);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .input-focus {
+    @apply transition-all duration-300;
+  }
+  .input-focus:focus {
+    @apply ring-2 ring-custom-yellow ring-offset-2 border-transparent;
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
+    transition: all 0.3s ease;
+  }
+  .btn-gradient:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
   }
 }
