@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import Image from 'next/image';
 
-// Schéma de validation
 const schema = yup.object({
   nom: yup.string().required('Le nom est obligatoire'),
   email: yup.string().email('Email invalide').required('L\'email est obligatoire'),
@@ -62,88 +61,175 @@ export default function TicketForm() {
       if (res.ok) {
         const code = generateCode();
         setTicketCode(code);
-        setSubmitStatus({ success: true, message: 'Votre demande a été envoyée avec succès !' });
+        setSubmitStatus({ success: true, message: '✅ Votre demande a été envoyée avec succès !' });
         reset();
         setPhotoPreview(null);
       } else {
-        setSubmitStatus({ success: false, message: result.error || 'Erreur lors de l\'envoi' });
+        setSubmitStatus({ success: false, message: result.error || '❌ Erreur lors de l\'envoi' });
       }
     } catch (error) {
-      setSubmitStatus({ success: false, message: 'Erreur réseau' });
+      setSubmitStatus({ success: false, message: '❌ Erreur réseau' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl w-full mx-auto p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-custom-yellow/30">
-      <h2 className="text-3xl font-bold text-custom-green mb-6 text-center">Demande de ticket</h2>
-      <p className="text-center text-gray-600 mb-6">Remplissez le formulaire et un code vous sera attribué après envoi.</p>
-
-      {/* Nom */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-custom-green">Nom complet *</label>
-        <input {...register('nom')} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
-        {errors.nom && <p className="text-red-500 text-sm mt-1">{errors.nom.message}</p>}
+    <div className="max-w-2xl w-full mx-auto px-4 py-12">
+      {/* Badge */}
+      <div className="text-center mb-8 animate-float">
+        <span className="inline-block bg-custom-yellow/20 text-custom-green text-xs font-semibold px-4 py-2 rounded-full border border-custom-yellow/30 backdrop-blur-sm">
+          🚀 Obtenez votre code en 2 minutes
+        </span>
       </div>
 
-      {/* Email */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-custom-green">Email *</label>
-        <input {...register('email')} type="email" className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-      </div>
-
-      {/* Téléphone */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-custom-green">Téléphone *</label>
-        <input {...register('telephone')} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
-        {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone.message}</p>}
-      </div>
-
-      {/* Message */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-custom-green">Message (optionnel)</label>
-        <textarea {...register('message')} rows={3} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
-      </div>
-
-      {/* Upload Photo */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-custom-green">Importer une photo *</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="mt-1 w-full p-2 border-2 border-dashed border-custom-yellow rounded-lg cursor-pointer hover:bg-custom-light-yellow/30 transition"
-        />
-        {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>}
-        {photoPreview && (
-          <div className="mt-2">
-            <Image src={photoPreview} alt="Aperçu" width={150} height={150} className="rounded-lg object-cover" />
-          </div>
-        )}
-      </div>
-
-      {/* Bouton Submit */}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full py-3 bg-custom-green text-white font-semibold rounded-lg hover:bg-custom-light-green transition disabled:opacity-50"
-      >
-        {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
-      </button>
-
-      {/* Message de statut */}
-      {submitStatus.message && (
-        <div className={`mt-4 p-3 rounded-lg ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-          {submitStatus.message}
-          {ticketCode && (
-            <p className="mt-2 font-bold text-custom-green">
-              🎫 Votre code ticket : <span className="bg-yellow-100 px-2 py-1 rounded">{ticketCode}</span>
-            </p>
-          )}
+      {/* Carte principale */}
+      <div className="glass-effect rounded-3xl shadow-2xl p-8 md:p-12 hover-lift">
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold text-custom-green">
+            🎫 Demande de ticket
+          </h2>
+          <p className="text-gray-600 mt-2 text-sm">
+            Remplissez le formulaire ci-dessous
+          </p>
+          <div className="w-20 h-1 bg-custom-yellow mx-auto mt-4 rounded-full"></div>
         </div>
-      )}
-    </form>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Nom */}
+          <div>
+            <label className="block text-sm font-semibold text-custom-green mb-1">
+              👤 Nom complet <span className="text-red-500">*</span>
+            </label>
+            <input
+              {...register('nom')}
+              placeholder="Votre nom et prénom"
+              className="w-full p-3 border-2 border-gray-200 rounded-xl input-focus bg-white/60"
+            />
+            {errors.nom && <p className="text-red-500 text-sm mt-1">{errors.nom.message}</p>}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-semibold text-custom-green mb-1">
+              📧 Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              {...register('email')}
+              type="email"
+              placeholder="votre@email.com"
+              className="w-full p-3 border-2 border-gray-200 rounded-xl input-focus bg-white/60"
+            />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          </div>
+
+          {/* Téléphone */}
+          <div>
+            <label className="block text-sm font-semibold text-custom-green mb-1">
+              📱 Téléphone <span className="text-red-500">*</span>
+            </label>
+            <input
+              {...register('telephone')}
+              placeholder="+229 00 00 00 00"
+              className="w-full p-3 border-2 border-gray-200 rounded-xl input-focus bg-white/60"
+            />
+            {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone.message}</p>}
+          </div>
+
+          {/* Message */}
+          <div>
+            <label className="block text-sm font-semibold text-custom-green mb-1">
+              💬 Message (optionnel)
+            </label>
+            <textarea
+              {...register('message')}
+              rows={3}
+              placeholder="Votre message..."
+              className="w-full p-3 border-2 border-gray-200 rounded-xl input-focus bg-white/60 resize-none"
+            />
+          </div>
+
+          {/* Photo */}
+          <div>
+            <label className="block text-sm font-semibold text-custom-green mb-1">
+              📸 Importer une photo <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="w-full p-4 border-2 border-dashed border-custom-yellow rounded-xl cursor-pointer hover:bg-custom-light-yellow/30 transition bg-white/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-custom-green file:text-white hover:file:bg-custom-light-green"
+              />
+            </div>
+            {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>}
+            {photoPreview && (
+              <div className="mt-4 flex justify-center">
+                <div className="relative group">
+                  <Image
+                    src={photoPreview}
+                    alt="Aperçu"
+                    width={160}
+                    height={160}
+                    className="rounded-xl object-cover shadow-lg border-2 border-custom-yellow/30"
+                  />
+                  <button
+                    onClick={() => {
+                      setPhotoPreview(null);
+                      setValue('photo', null);
+                    }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition shadow-lg"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Bouton */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-4 btn-gradient text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Envoi en cours...
+              </span>
+            ) : (
+              '📤 Envoyer la demande'
+            )}
+          </button>
+
+          {/* Statut */}
+          {submitStatus.message && (
+            <div className={`mt-4 p-4 rounded-xl text-sm font-medium ${submitStatus.success ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+              {submitStatus.message}
+              {ticketCode && (
+                <div className="mt-3 p-3 bg-custom-yellow/20 rounded-lg border border-custom-yellow">
+                  <p className="text-center">
+                    🎫 Votre code :{' '}
+                    <span className="font-bold text-custom-green text-lg">{ticketCode}</span>
+                  </p>
+                  <p className="text-xs text-gray-500 text-center mt-1">
+                    Gardez ce code précieusement
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </form>
+      </div>
+
+      {/* Footer */}
+      <p className="text-center text-xs text-gray-400 mt-6">
+        🔒 Toutes vos données sont sécurisées et envoyées uniquement à notre équipe
+      </p>
+    </div>
   );
 }
