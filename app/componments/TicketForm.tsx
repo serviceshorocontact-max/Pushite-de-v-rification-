@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import Image from 'next/image';
 
+// Schéma de validation
 const schema = yup.object({
   nom: yup.string().required('Le nom est obligatoire'),
   email: yup.string().email('Email invalide').required('L\'email est obligatoire'),
@@ -79,29 +80,34 @@ export default function TicketForm() {
       <h2 className="text-3xl font-bold text-custom-green mb-6 text-center">Demande de ticket</h2>
       <p className="text-center text-gray-600 mb-6">Remplissez le formulaire et un code vous sera attribué après envoi.</p>
 
+      {/* Nom */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-custom-green">Nom complet *</label>
         <input {...register('nom')} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
         {errors.nom && <p className="text-red-500 text-sm mt-1">{errors.nom.message}</p>}
       </div>
 
+      {/* Email */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-custom-green">Email *</label>
         <input {...register('email')} type="email" className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
       </div>
 
+      {/* Téléphone */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-custom-green">Téléphone *</label>
         <input {...register('telephone')} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
         {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone.message}</p>}
       </div>
 
+      {/* Message */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-custom-green">Message (optionnel)</label>
         <textarea {...register('message')} rows={3} className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-yellow focus:border-transparent" />
       </div>
 
+      {/* Upload Photo */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-custom-green">Importer une photo *</label>
         <input
@@ -118,6 +124,7 @@ export default function TicketForm() {
         )}
       </div>
 
+      {/* Bouton Submit */}
       <button
         type="submit"
         disabled={isSubmitting}
@@ -126,6 +133,7 @@ export default function TicketForm() {
         {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
       </button>
 
+      {/* Message de statut */}
       {submitStatus.message && (
         <div className={`mt-4 p-3 rounded-lg ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
           {submitStatus.message}
